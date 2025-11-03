@@ -1,28 +1,46 @@
-# Visual Studio temporary files
-.vs/
-*.user
-*.suo
+# Ignore Visual Studio temporary files, build results, and
+# user-specific files
 
-# Build results
+## User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
 [Bb]in/
 [Oo]bj/
 
-# IIS Express
-applicationhost.config
+## Visual Studio folders
+.vs/
+.vscode/
 
-# Cache
-*.cache
+## NuGet packages
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+
+## Microsoft Azure Web Apps
+PublishProfiles/
+
+## Logs
 *.log
 
-# Database
-*.db
-*.mdf
-*.ldf
-
-# Python / virtual env (just in case)
-env/
-venv/
-
-# System files
-Thumbs.db
-.DS_Store
+## Other
+*.cache
+*.dbmdl
+*.bak
+*.Backup
+*.tmp
+*.bak
+*.old

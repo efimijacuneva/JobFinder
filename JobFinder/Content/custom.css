@@ -1,0 +1,192 @@
+﻿
+:root {
+    --primary-color: #31166e;
+    --primary-hover: #612abe;
+    --accent-color: #b998f5;
+    --background-color: #eae8f7;
+    --surface-color: #ffffff;
+    --text-color: #1a1a1a;
+    --muted-text: #5e5b71;
+}
+
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+
+.navbar {
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: #fff !important;
+    letter-spacing: 0.5px;
+}
+
+.nav-link {
+    color: #f5efff !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+    .nav-link:hover {
+        color: #fff !important;
+        text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+    }
+
+
+.jumbotron {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+    .jumbotron h1 {
+        font-weight: 700;
+        font-size: 2.8rem;
+        letter-spacing: 0.5px;
+    }
+
+    .jumbotron p {
+        font-size: 1.2rem;
+        opacity: 0.95;
+    }
+
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    border-radius: 8px;
+    padding: 0.25rem 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+    .btn-primary:hover {
+        background-color: var(--primary-hover) !important;
+        border-color: var(--primary-hover) !important;
+        
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+    }
+
+.btn-outline-primary {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+    .btn-outline-primary:hover {
+        background-color: var(--primary-color) !important;
+        color: white !important;
+        
+        box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+    }
+
+.card {
+    background-color: var(--surface-color);
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding-bottom: 0.5rem;
+}
+
+    .card:hover {
+        
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+.card-title {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.card-text {
+    color: var(--muted-text);
+}
+
+.card ul li {
+    margin-bottom: 0.5rem;
+    color: var(--muted-text);
+}
+
+
+.alert-success {
+    background-color: #e8f5e9;
+    color: #256029;
+    border-left: 5px solid #43a047;
+}
+
+.alert-danger {
+    background-color: #fce4ec;
+    color: #b71c1c;
+    border-left: 5px solid #e91e63;
+}
+
+
+footer {
+    background-color: var(--primary-hover);
+    color: #f9f9f9;
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 0.95rem;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+    footer p {
+        margin: 0;
+    }
+
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+    a:hover {
+        color: var(--primary-hover);
+    }
+
+
+.col-md-6 {
+    margin-top: 1rem;
+}
+
+.row {
+    margin-top: 1rem;
+}
+
+
+@media (max-width: 768px) {
+    .jumbotron {
+        padding: 2.5rem 1.2rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+
+    .card {
+        margin-bottom: 1rem;
+    }
+}
+
+.g-2 > div:nth-child(3) {
+    margin-top: 3px;
+}

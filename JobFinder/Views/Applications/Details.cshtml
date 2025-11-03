@@ -1,0 +1,92 @@
+@model JobFinder.Models.JobApplication
+
+@{
+    ViewBag.Title = "Application Details";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-file-alt text-primary me-2"></i>
+                        Application Details
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <h4>@Model.JobPost.Title</h4>
+                            <p class="text-muted mb-0">
+                                <i class="fas fa-building me-2"></i>@Model.JobPost.Company.UserName
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <span class="badge bg-@(Model.Status == "Pending" ? "warning" : Model.Status == "Accepted" ? "success" : Model.Status == "Rejected" ? "danger" : "info") fs-6">
+                                @Model.Status
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Location</small>
+                                <strong>@Model.JobPost.Location</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Category</small>
+                                <strong>@Model.JobPost.Category</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Applied On</small>
+                        <strong>@Model.AppliedOn.ToString("MMM dd, yyyy 'at' HH:mm")</strong>
+                    </div>
+
+                    <div class="mb-4">
+                        <small class="text-muted d-block">CV File</small>
+                        @if (!string.IsNullOrEmpty(Model.CvFilePath))
+                        {
+                            <a href="@Url.Action("DownloadCV", "Applications", new { id = Model.Id })" class="btn btn-outline-info">
+                                <i class="fas fa-download me-2"></i>Download CV
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">No CV uploaded</span>
+                        }
+                    </div>
+
+                    
+                    @if (!string.IsNullOrEmpty(Model.CompanyResponse))
+                    {
+                        <div class="alert alert-success">
+                            <h6 class="alert-heading mb-2">
+                                <i class="fas fa-reply me-2"></i>Company Response @(Model.ResponseDate.HasValue ? Model.ResponseDate.Value.ToString("M/d/yyyy h:mm") : "")
+                            </h6>
+                            <p class="mb-0">@Model.CompanyResponse</p>
+                        </div>
+                    }
+
+                    <div class="d-flex justify-content-between">
+                        <a href="@Url.Action("MyApplications")" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to My Applications
+                        </a>
+                        <a href="@Url.Action("Details", "JobPosts", new { id = Model.JobPost.Id })" class="btn btn-outline-primary">
+                            <i class="fas fa-briefcase me-2"></i>View Job Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 

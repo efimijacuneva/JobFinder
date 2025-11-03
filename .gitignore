@@ -1,0 +1,28 @@
+# Visual Studio temporary files
+.vs/
+*.user
+*.suo
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# IIS Express
+applicationhost.config
+
+# Cache
+*.cache
+*.log
+
+# Database
+*.db
+*.mdf
+*.ldf
+
+# Python / virtual env (just in case)
+env/
+venv/
+
+# System files
+Thumbs.db
+.DS_Store

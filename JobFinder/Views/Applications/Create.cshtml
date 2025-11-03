@@ -1,0 +1,86 @@
+﻿@model JobFinder.Models.JobApplication
+
+@{
+    ViewBag.Title = "Apply for Job";
+    var jobPost = ViewBag.JobPost as JobFinder.Models.JobPost;
+}
+
+<h2>Apply for Job</h2>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Job Details</h5>
+            </div>
+            <div class="card-body">
+                <h6>@jobPost.Title</h6>
+                <p class="text-muted">@jobPost.Company.UserName • @jobPost.Location</p>
+                <p>@jobPost.Description</p>
+                <small class="text-muted">Posted on @jobPost.DatePosted.ToString("MMM dd, yyyy")</small>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("Create", "Applications", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("id", jobPost.Id)
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Application Form</h5>
+                </div>
+                <div class="card-body">
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                    <div class="mb-3">
+                        <label for="cv" class="form-label">Upload Your CV/Resume</label>
+                        <input type="file" name="cv" id="cv" class="form-control" accept=".pdf,.doc,.docx" required />
+                        <div class="form-text">Accepted formats: PDF, DOC, DOCX (Max 5MB)</div>
+                        @if (!ViewData.ModelState.IsValid && ViewData.ModelState["cv"] != null)
+                        {
+                            <div class="text-danger">@ViewData.ModelState["cv"].Errors[0].ErrorMessage</div>
+                        }
+                    </div>
+
+                    <div class="alert alert-info">
+                        <h6>Application Tips:</h6>
+                        <ul class="mb-0">
+                            <li>Make sure your CV is up-to-date and relevant to this position</li>
+                            <li>Include your contact information and work experience</li>
+                            <li>Highlight skills that match the job requirements</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="@Url.Action("Details", "JobPosts", new { id = jobPost.Id })" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Submit Application</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>Application Process</h5>
+            </div>
+            <div class="card-body">
+                <ol class="list-unstyled">
+                    <li class="mb-3">
+                        <strong>1. Upload CV</strong><br>
+                        <small class="text-muted">Upload your resume in PDF or Word format</small>
+                    </li>
+                    <li class="mb-3">
+                        <strong>2. Submit Application</strong><br>
+                        <small class="text-muted">Your application will be sent to the company</small>
+                    </li>
+                    <li class="mb-3">
+                        <strong>3. Track Progress</strong><br>
+                        <small class="text-muted">Monitor your application status in "My Applications"</small>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+
+
+<div class="jumbotron bg-primary text-white text-center py-5">
+    <h1 class="display-4">Welcome to JobFinder</h1>
+    <p class="lead">Find your dream job or hire the perfect candidate</p>
+    <hr class="my-4">
+    <p>Connect companies with talented professionals</p>
+    <a class="btn btn-light btn-lg" href="@Url.Action("Index", "JobPosts")" role="button">Browse Jobs</a>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-outline-light btn-lg ms-2" href="@Url.Action("Register", "Account")" role="button">Get Started</a>
+    }
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">For Job Seekers</h5>
+                <p class="card-text">Browse thousands of job opportunities, upload your CV, and apply with just one click.</p>
+                <ul class="list-unstyled">
+                    <li>✓ Search jobs by location and category</li>
+                    <li>✓ Easy application process</li>
+                    <li>✓ Track your applications</li>
+                </ul>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <a href="@Url.Action("Register", "Account")" class="btn btn-primary">Register as Candidate</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">For Companies</h5>
+                <p class="card-text">Post job openings, review applications, and find the perfect candidates for your team.</p>
+                <ul class="list-unstyled">
+                    <li>✓ Post unlimited job openings</li>
+                    <li>✓ Review candidate applications</li>
+                    <li>✓ Download CV files</li>
+                    <li>✓ Manage your job posts</li>
+                </ul>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <a href="@Url.Action("Register", "Account")" class="btn btn-primary">Register as Company</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <h3 class="text-center mb-4">Latest Job Openings</h3>
+        <div class="text-center">
+            <a href="@Url.Action("Index", "JobPosts")" class="btn btn-outline-primary">View All Jobs</a>
+        </div>
+    </div>
+</div>

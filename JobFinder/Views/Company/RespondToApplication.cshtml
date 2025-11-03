@@ -1,0 +1,124 @@
+@model JobFinder.Models.JobApplication
+
+@{
+    ViewBag.Title = "Respond to Application";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-reply text-primary me-2"></i>
+                        Respond to Application
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <div class="alert alert-info mb-4">
+                        <h6 class="alert-heading">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Application Details
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <small class="text-muted d-block">Candidate</small>
+                                <strong>@Model.Candidate.UserName</strong>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted d-block">Applied For</small>
+                                <strong>@Model.JobPost.Title</strong>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <small class="text-muted d-block">Applied Date</small>
+                                <strong>@Model.AppliedOn.ToString("MMM dd, yyyy")</strong>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted d-block">Current Status</small>
+                                <span class="badge bg-@(Model.Status == "Pending" ? "warning" : Model.Status == "Accepted" ? "success" : Model.Status == "Rejected" ? "danger" : "info")">
+                                    @Model.Status
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @using (Html.BeginForm("RespondToApplication", "Company", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.Id" />
+
+                        <div class="mb-3">
+                            <label for="status" class="form-label">
+                                <i class="fas fa-tag text-muted me-2"></i>Application Status
+                            </label>
+                            <select name="status" id="status" class="form-select" required>
+                                <option value="">Select Status</option>
+                                <option value="Pending" @(Model.Status == "Pending" ? "selected" : "")>Pending</option>
+                                <option value="Reviewed" @(Model.Status == "Reviewed" ? "selected" : "")>Reviewed</option>
+                                <option value="Accepted" @(Model.Status == "Accepted" ? "selected" : "")>Accepted</option>
+                                <option value="Rejected" @(Model.Status == "Rejected" ? "selected" : "")>Rejected</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="companyResponse" class="form-label">
+                                <i class="fas fa-comment text-muted me-2"></i>Response Message
+                            </label>
+                            <textarea name="companyResponse" id="companyResponse" class="form-control" rows="6" 
+                                      placeholder="Write a message to the candidate. This will be visible to them in their application history.">@Model.CompanyResponse</textarea>
+                            <div class="form-text">
+                                <i class="fas fa-lightbulb text-warning me-1"></i>
+                                Tip: Be professional and constructive in your response. This message will be visible to the candidate.
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Applicants", new { id = Model.JobPostId })" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Applicants
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i>Send Response
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            
+            <div class="card border-0 shadow-sm mt-4">
+                <div class="card-header bg-white border-0 py-3">
+                    <h6 class="card-title mb-0">
+                        <i class="fas fa-lightbulb text-warning me-2"></i>
+                        Response Guidelines
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            <strong>Accepted:</strong> Provide next steps, interview details, or onboarding information
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            <strong>Rejected:</strong> Be constructive and professional, offer feedback when possible
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            <strong>Reviewed:</strong> Acknowledge receipt and provide timeline for next steps
+                        </li>
+                        <li>
+                            <i class="fas fa-check text-success me-2"></i>
+                            <strong>Pending:</strong> Let candidates know their application is under consideration
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 

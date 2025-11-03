@@ -1,0 +1,138 @@
+﻿@model JobFinder.Models.ManageLoginsViewModel
+@using Microsoft.Owin.Security
+@{
+    ViewBag.Title = "Manage External Logins";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-shield-alt text-primary me-2"></i>
+                        Manage External Logins
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    @if (!string.IsNullOrEmpty(ViewBag.StatusMessage))
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>
+                            @ViewBag.StatusMessage
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    }
+
+                    @{
+                        var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+                        if (loginProviders.Count() == 0)
+                        {
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                There are no external authentication services configured. See 
+                                <a href="https://go.microsoft.com/fwlink/?LinkId=313242" target="_blank">this article</a>
+                                for details on setting up this ASP.NET application to support logging in via external services.
+                            </div>
+                        }
+                        else
+                        {
+                            if (Model.CurrentLogins.Count > 0)
+                            {
+                                <div class="mb-4">
+                                    <h6 class="mb-3">
+                                        <i class="fas fa-link text-success me-2"></i>
+                                        Connected Accounts
+                                    </h6>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Provider</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var account in Model.CurrentLogins)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <i class="fas fa-check-circle text-success me-2"></i>
+                                                                <strong>@account.LoginProvider</strong>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <span class="badge bg-success">Connected</span>
+                                                        </td>
+                                                        <td>
+                                                            @if (ViewBag.ShowRemoveButton)
+                                                            {
+                                                                using (Html.BeginForm("RemoveLogin", "Manage"))
+                                                                {
+                                                                    @Html.AntiForgeryToken()
+                                                                    @Html.Hidden("loginProvider", account.LoginProvider)
+                                                                    @Html.Hidden("providerKey", account.ProviderKey)
+                                                                    <button type="submit" class="btn btn-outline-danger btn-sm" 
+                                                                            title="Remove this @account.LoginProvider login from your account">
+                                                                        <i class="fas fa-unlink me-1"></i>Remove
+                                                                    </button>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="text-muted">Primary account</span>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+
+                            if (Model.OtherLogins.Count > 0)
+                            {
+                                <div class="border-top pt-4">
+                                    <h6 class="mb-3">
+                                        <i class="fas fa-plus text-primary me-2"></i>
+                                        Add External Login
+                                    </h6>
+                                    <p class="text-muted mb-3">Connect additional external accounts to your profile.</p>
+                                    
+                                    using (Html.BeginForm("LinkLogin", "Manage"))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="d-grid gap-2 d-md-flex">
+                                            @foreach (AuthenticationDescription p in Model.OtherLogins)
+                                            {
+                                                <button type="submit" class="btn btn-outline-primary" 
+                                                        id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" 
+                                                        title="Log in using your @p.Caption account">
+                                                    <i class="fas fa-external-link-alt me-2"></i>
+                                                    Connect @p.AuthenticationType
+                                                </button>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+            
+            
+            <div class="text-center mt-4">
+                <a href="@Url.Action("Index", "Manage")" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Profile
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

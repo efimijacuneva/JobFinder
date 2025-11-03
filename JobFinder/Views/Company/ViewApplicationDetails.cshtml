@@ -1,0 +1,112 @@
+@model JobFinder.Models.JobApplication
+
+@{
+    ViewBag.Title = "Application Details";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-file-alt text-primary me-2"></i>
+                        Application Details
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <h4>@Model.JobPost.Title</h4>
+                            <p class="text-muted mb-0">
+                                <i class="fas fa-user me-2"></i>@Model.Candidate.UserName
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <span class="badge bg-@(Model.Status == "Pending" ? "warning" : Model.Status == "Accepted" ? "success" : Model.Status == "Rejected" ? "danger" : "info") fs-6">
+                                @Model.Status
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Candidate Email</small>
+                                <strong>@Model.Candidate.Email</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Applied On</small>
+                                <strong>@Model.AppliedOn.ToString("MMM dd, yyyy 'at' HH:mm")</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Job Location</small>
+                                <strong>@Model.JobPost.Location</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Job Category</small>
+                                <strong>@Model.JobPost.Category</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <small class="text-muted d-block">CV File</small>
+                        @if (!string.IsNullOrEmpty(Model.CvFilePath))
+                        {
+                            <a href="@Url.Action("DownloadCV", "Applications", new { id = Model.Id })" class="btn btn-outline-info">
+                                <i class="fas fa-download me-2"></i>Download CV
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">No CV uploaded</span>
+                        }
+                    </div>
+
+                    
+                    @if (!string.IsNullOrEmpty(Model.CompanyResponse))
+                    {
+                        <div class="alert alert-success">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="alert-heading mb-0">
+                                    <i class="fas fa-reply me-2"></i>Your Response @(Model.ResponseDate.HasValue ? Model.ResponseDate.Value.ToString("M/d/yyyy h:mm") : "")
+                                </h6>
+                                <form method="post" action="@Url.Action("DeleteResponse", "Company", new { id = Model.Id })" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this response?');">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-trash me-1"></i>Delete Response
+                                    </button>
+                                </form>
+                            </div>
+                            <p class="mb-0">@Model.CompanyResponse</p>
+                        </div>
+                    }
+
+                    <div class="d-flex justify-content-between">
+                        <a href="@Url.Action("Applicants", new { id = Model.JobPostId })" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Applicants
+                        </a>
+                        <div>
+                            <a href="@Url.Action("RespondToApplication", new { id = Model.Id })" class="btn btn-primary">
+                                <i class="fas fa-reply me-2"></i>Respond to Application
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 

@@ -1,0 +1,43 @@
+﻿@*This is for future updates*@
+
+@model JobFinder.Models.VerifyCodeViewModel
+@{
+    ViewBag.Title = "Verify";
+}
+
+<main aria-labelledby="title">
+    <h2 id="title">@ViewBag.Title.</h2>
+
+    @using (Html.BeginForm("VerifyCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="provider" value="@Model.Provider" />
+        <input type="hidden" name="rememberMe" value="@Model.RememberMe" />
+        <h4>Enter verification code</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="row">
+            <label for="Code" class="col-md-2 col-form-label">Code</label>
+            <div class="col-md-10">
+                <input type="text" name="Code" id="Code" class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-md-2 col-md-10">
+                <div class="checkbox">
+                    <input type="checkbox" name="RememberBrowser" id="RememberBrowser" />
+                    <label for="RememberBrowser">Remember this browser?</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-md-2 col-md-10">
+                <input type="submit" class="btn btn-outline-dark" value="Submit" />
+            </div>
+        </div>
+    }
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

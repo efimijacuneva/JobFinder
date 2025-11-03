@@ -15,8 +15,6 @@
 - [🚀 Quick Start](#-quick-start)
 - [📖 Usage Guide](#-usage-guide)
 - [🏗️ Architecture](#️-architecture)
-- [🔧 Configuration](#-configuration)
-- [🤝 Contributing](#-contributing)
 - [📄 License](#-license)
 
 ## ✨ Features
